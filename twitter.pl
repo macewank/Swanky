@@ -7,13 +7,17 @@
 use Net::Twitter;
 use Term::ANSIMenu;
 
-# The following 4 values must be retrieved by creating
-# a developer account at http://dev.twitter.com
+# dont change these values as they are the client identifiers
 
-my $consumer_key = "";
-my $consumer_secret = "";
+my $consumer_key = "hDH26dHu12l1SwxjVvRnEw";
+my $consumer_secret = "8MdzIBurZ7bg8yMI2DhFsfvLcOxNtW4vyvtuEP4Zpg";
+
+# These must set to YOUR OAuth tokens and can be found by creating an account on 
+# http://dev.twitter.com .. Do not publish code with your access tokens!
+
 my $access_token = "";
 my $access_token_secret = "";
+
 
 $nettwit = Net::Twitter->new(
 	traits => [qw/OAuth API::REST/],
