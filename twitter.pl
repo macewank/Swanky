@@ -29,7 +29,7 @@ $nettwit = Net::Twitter->new(
 
 my $menumap = Term::ANSIMenu->new(
 	width => 40,
-	title => 'Swanky v0.4',
+	title => 'Swanky v0.4.1',
 	items => [['1', 'Update Status', \&update_status],
 		  ['2', 'Timeline', \&view_status],
 		  ['3', 'Mentions', \&view_mentions],
@@ -58,8 +58,12 @@ sub view_status {
   my $timelines = $nettwit->friends_timeline({ count => 15 });
   my $count = 0;
   for my $timeline ( @$timelines ) {
+    my $content = $timeline->{text};
+    $content =~ s/[^[:ascii:]]+//g;
+    $content =~ s/\&lt\;/</g;
+    $content =~ s/\&gt\;/>/g;
     print "--------\n";
-    print "\[$count\]$timeline->{created_at} <$timeline->{user}{screen_name}> $timeline->{text}\n";
+    print "\[$count\]$timeline->{created_at} <$timeline->{user}{screen_name}> $content\n";
     $count++;
   }
   print "Enter tweet number to act, leave blank to return to main menu: ";
@@ -87,8 +91,12 @@ sub view_mentions {
   my $mentions = $nettwit->mentions({ count => 15 });
   my $count = 0;
   for my $mention ( @$mentions ) {
+    my $content = $mention->{text};
+    $content =~ s/[^[:ascii:]]+//g;
+    $content =~ s/\&lt\;/</g;
+    $content =~ s/\&gt\;/>/g;
     print "--------\n";
-    print "\[$count\]$mention->{created_at} <$mention->{user}{screen_name}> $mention->{text}\n";
+    print "\[$count\]$mention->{created_at} <$mention->{user}{screen_name}> $content\n";
     $count++;
   }
   print "Enter tweet number to act, leave blank to return to main menu: ";
